@@ -40,26 +40,18 @@ const createSquareContainer = () => {
 };
 createSquareContainer();
 
-const colorsOption = document.querySelectorAll("option");
+const inputSelect = document.querySelector("select");
 
-colorsOption.forEach((color) => {
-  color.addEventListener("click", ({ target }) => {
-    const squares = document.querySelectorAll(
-      '[data-js="square-container"] div'
-    );
+inputSelect.addEventListener("change", ({ target }) => {
+    const squaresContainer = document.querySelector('[data-js="square-container"]');
+    squaresContainer.innerHTML = '';
 
-    const arrayOfSquares = [...squares];
-    const findSquare = arrayOfSquares.find(
-      (square) => square.style.backgroundColor === target.value
-    );
+  const selecteds = [...target.selectedOptions].map(
+    (selected) => selected.value
+  );
 
-    if (findSquare) {
-      const container = document.querySelector('[data-js="square-container"]');
-      const child = document.querySelector(`.${target.value}`);
-      container.removeChild(child);
-    } else {
-      createSquare(target.value);
-    }
+  selecteds.forEach((selected) => {
+      createSquare(selected);
   });
 });
 

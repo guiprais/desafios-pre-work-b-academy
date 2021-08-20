@@ -10,6 +10,7 @@ async function request(url) {
 }
 
 function showCars() {
+  tableBody.innerHTML = "";
   request(url).then((response) => {
     const tr = document.createElement("tr");
 
@@ -20,7 +21,6 @@ function showCars() {
 
       tableBody.appendChild(tr);
     } else {
-      tableBody.innerHTML = "";
       response.forEach((car) => {
         const tr = document.createElement("tr");
         const values = Object.values(car);
@@ -29,6 +29,12 @@ function showCars() {
           td.textContent = value;
           tr.appendChild(td);
         });
+
+        const deleteBtn = document.createElement("td");
+        deleteBtn.addEventListener("click", () => deleteCar(car.plate));
+
+        deleteBtn.innerHTML = `<button class="del-btn ${car.plate}">Deletar</button>`;
+        tr.appendChild(deleteBtn);
         tableBody.appendChild(tr);
       });
     }
@@ -65,5 +71,17 @@ carsForm.addEventListener("submit", (event) => {
     .then((result) => result.ok && showCars())
     .catch(() => "Carro já cadastrado");
 });
+
+function deleteCar(carPlate) {
+  fetch(url, {
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify({
+      plate: carPlate,
+    }),
+  }).then(() => showCars());
+}
 
 window.onload = showCars;

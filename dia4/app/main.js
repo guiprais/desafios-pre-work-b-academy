@@ -71,8 +71,11 @@ carsForm.addEventListener("submit", (event) => {
     .then((result) => (result.ok ? showCars() : result.json()))
     .then((result) => {
       const error = document.querySelector('[data-js="error"]');
-
       error.innerHTML = "";
+
+      if (!result) {
+        return;
+      }
 
       error.innerText = result.message;
       error.style.color = "red";

@@ -68,10 +68,18 @@ carsForm.addEventListener("submit", (event) => {
       color,
     }),
   })
-    .then((result) => result.ok && showCars())
-    .catch(() => "Carro já cadastrado");
-});
+    .then((result) => (result.ok ? showCars() : result.json()))
+    .then((result) => {
+      const error = document.querySelector('[data-js="error"]');
 
+      error.innerHTML = "";
+
+      error.innerText = result.message;
+      error.style.color = "red";
+
+      carsForm.appendChild(error);
+    });
+});
 function deleteCar(carPlate) {
   fetch(url, {
     method: "DELETE",

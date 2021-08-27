@@ -6,3 +6,8 @@ body {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+a {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  padding: 5px 15px;
+}

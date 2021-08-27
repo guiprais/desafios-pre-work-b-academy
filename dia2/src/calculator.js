@@ -1,4 +1,5 @@
 function calculadora (callback) {
+  return callback;
 }
 
 const sum = calculadora((a, b) => a + b)
